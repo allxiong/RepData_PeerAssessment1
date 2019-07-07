@@ -56,10 +56,9 @@ Make a time series plot (i.e. \color{red}{\verb|type = "l"|}type="l") of the 5-m
 ```{r}
 library(dplyr,quietly = TRUE)
 library(ggplot2)
-#require(ggplot2)
 avg.steps<- tapply(activity$steps, activity$interval, mean, na.rm = TRUE)
-avg.steps.df<-data.frame(interval=as.numeric(names(avg.steps)), avg.steps=as.integer(avg.steps))
-p <- ggplot(avg.steps.df, aes(x=interval, y=avg.steps), xlab = "Interval", ylab="Average Number of Steps")
+avg.steps.table<-data.frame(interval=as.numeric(names(avg.steps)), avg.steps=as.integer(avg.steps))
+p <- ggplot(avg.steps.table, aes(x=interval, y=avg.steps), xlab = "Interval", ylab="Average Number of Steps")
 p + geom_line(color="blue")+xlab("Interval")+ylab("Average Number of Steps")+ggtitle("Average Steps Per Interval")
 
 ```

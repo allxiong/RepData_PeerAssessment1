@@ -150,39 +150,24 @@ Make a time series plot (i.e. \color{red}{\verb|type = "l"|}type="l") of the 5-m
 ```r
 library(dplyr,quietly = TRUE)
 library(ggplot2)
-#require(ggplot2)
 avg.steps<- tapply(activity$steps, activity$interval, mean, na.rm = TRUE)
-avg.steps.df<-data.frame(interval=as.numeric(names(avg.steps)), avg.steps=as.integer(avg.steps))
-p <- ggplot(avg.steps.df, aes(x=interval, y=avg.steps), xlab = "Interval", ylab="Average Number of Steps")
+avg.steps.table<-data.frame(interval=as.numeric(names(avg.steps)), avg.steps=as.integer(avg.steps))
+p <- ggplot(avg.steps.table, aes(x=interval, y=avg.steps), xlab = "Interval", ylab="Average Number of Steps")
 p + geom_line(color="blue")+xlab("Interval")+ylab("Average Number of Steps")+ggtitle("Average Steps Per Interval")
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png)
 #5. The 5-minute interval that, on average, contains the maximum number of steps
 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 ```r
 max.steps<-max(avg.steps.table$avg.steps)
-```
-
-```
-## Error in avg.steps.table$avg.steps: $ operator is invalid for atomic vectors
-```
-
-```r
 max.interval<-avg.steps.table[avg.steps.table$avg.steps==max.steps, 1]
-```
-
-```
-## Error in avg.steps.table$avg.steps: $ operator is invalid for atomic vectors
-```
-
-```r
 print(max.interval)
 ```
 
 ```
-## [1] 37.3826
+## [1] 835
 ```
 #6. Code to describe and show a strategy for imputing missing data
 first, check the amount of missing values
@@ -260,7 +245,7 @@ total.steps.perday2<-with(activity2,tapply(steps, date, sum, na.rm=T))
 hist(total.steps.perday2)
 ```
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png)
 
 ```r
 mean.daily.steps<-as.integer(mean(total.steps.perday2))
@@ -303,5 +288,5 @@ steps.df<-rbind(stepwkday, stepwkend)
 qplot(Interval, Steps, data=steps.df, facets=day~., geom=c("line"), color=day)
 ```
 
-![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png)
+![plot of chunk unnamed-chunk-26](figure/unnamed-chunk-26-1.png)
 
